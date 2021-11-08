@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
+
+group 'ucf.assignments'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    version = '17'
+}
+
+mainClassName = "ucf.assignments.App"
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
+}
