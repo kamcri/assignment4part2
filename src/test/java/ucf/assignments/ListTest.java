@@ -1,3 +1,7 @@
+/*
+ *  UCF COP3330 Fall 2021 Assignment 4 Solution
+ *  Copyright 2021 Kameryn Cambridge
+ */
 package ucf.assignments;
 
 import org.junit.jupiter.api.Test;
@@ -44,7 +48,7 @@ class ListTest {
         //create ArrayList<Items>
         //add some items to the list
         //mark one complete
-        //run displayComplete and verify only one item is shown
+        //run completeItems and verify only one item is shown
     }
 
     @Test
@@ -52,7 +56,7 @@ class ListTest {
         //create ArrayList<Items>
         //add some items to the list
         //mark one incomplete
-        //run displayIncomplete and verify only one item is shown
+        //run incompleteItems and verify only one item is shown
     }
 
     @Test

@@ -6,7 +6,9 @@
 package ucf.assignments;
 
 import com.sun.tools.javac.jvm.Items;
+import javafx.scene.control.CheckBox;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,13 +20,11 @@ import java.lang.Class.*;
 
 /*
 * Describes what a single to-do list is and adding items to the list.
-* This is a model for a list.
+* This is a model.
 * Moved "displayLists" methods here instead. */
 
 public class List {
-
-    String title;
-    ArrayList<List> toDoList; //represents all lists
+    ArrayList<List> toDoList; //represents all lists--titles.
     ArrayList<Item> itemsList; //represents one to do list
 
     public List(){
@@ -32,36 +32,15 @@ public class List {
         this.itemsList = new ArrayList<Item>();
     }
 
-    //getters and setters
-    public String getTitle(){
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public ArrayList<Item> getItemsList() {
-        return itemsList;
-    }
-
     public void setItemsList(ArrayList<Item> itemsList) {
         this.itemsList = itemsList;
     }
 
-    public void createList(String title, ArrayList<Item> itemsList, ArrayList<Item> sortedItemsList){
-        this.setTitle(title);
-        this.setItemsList(itemsList);
+    public void displayAllItems(){
+        //move to controller
     }
 
-
-    public ArrayList<Item> displayAllItems(){
-        for(Item items : itemsList) {
-            //display items in a list view
-        }
-    }
-
-    public ArrayList<Item> displayComplete() {
+    public ArrayList<Item> completeItems() {
         ArrayList<Item> Complete = new ArrayList<Item>();
         for(Item item  : itemsList)
         {
@@ -73,7 +52,7 @@ public class List {
         return Complete;
     }
 
-    public ArrayList<Item> displayIncomplete() {
+    public ArrayList<Item> incompleteItems() {
         ArrayList<Item> Incomplete = new ArrayList<>();
         //search through original array list
         for(Item item  : itemsList)
@@ -93,12 +72,7 @@ public class List {
         //copy into sortedItemsList
         return sortedItemsList;
     }
-    public ArrayList<List> addList(){
-        //get text for listTitle
-        //String title = get title
-        //add new List to Lists
-        //return lists
-    }
+
 
     public ArrayList<List> deleteList(){
         //get name of list array list "Lists"
@@ -114,7 +88,7 @@ public class List {
     public void save(){
         //search for list in array list
         //save that list to a .txt file
-        //create new ArrayList<List> that stores all Lists (savedLists)
+        //create new ArrayList<list> that stores all Lists (savedLists)
     }
 
     public void saveAll(){
@@ -123,14 +97,39 @@ public class List {
         //add saved lists to ArrayList 'savedLists'
     }
 
-    //public ArrayList<List> loadList() throws IOException, ClassNotFoundException {
+    //public ArrayList<list> loadList() throws IOException, ClassNotFoundException {
     public void loadList() throws IOException, ClassNotFoundException{
 
     }
 
-    public ArrayList<List> loadAll(){
+    /*public ArrayList<List> loadAll(){
         //return the saved list
+    }*/
+
+    public void markComplete(Item item){
+        if(!item.completed){
+            item.completed = true;
+        }
     }
+    public void deleteItem(List list, Item item){
+        list.itemsList.remove(item);
+    }
+
+    public void clearItems(List list){
+        list.itemsList.clear();
+    }
+
+    public void addItem(List list, Item item){
+        list.itemsList.add(item);
+    }
+
+    public void markIncomplete(Item item){
+        if(item.completed){
+            item.completed = false;
+        }
+    }
+
+
 }
 
 

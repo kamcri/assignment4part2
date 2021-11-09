@@ -7,16 +7,17 @@ package ucf.assignments;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /* Created a window that will pop up when "Edit Item" button is pressed.
 *  This class deals with it. */
-public class EditItemController {
-
-    @FXML
-    public Button btnEditItem;
+public class EditItemController implements Initializable {
 
     @FXML
     public Button btnSave;
@@ -30,10 +31,22 @@ public class EditItemController {
     @FXML
     public DatePicker dueDateField;
 
-    //use constructors for new description and/or due date
+
     @FXML
-    public void addItemButton(ActionEvent event){
-        String desc;
-        String due;
+    public void saveButtonClicked(ActionEvent event){
+        /*
+        * save changes to the list view.
+        * automatically load view lists window*/
+    }
+
+    @FXML
+    public void cancelButtonClicked(ActionEvent event){
+        /*
+        * automatically load view lists window.*/
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

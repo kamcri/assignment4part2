@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Assignment 4 Solution
+ *  Copyright 2021 Kameryn Cambridge
+ */
+
 package ucf.assignments;
 
 import javafx.application.Application;
@@ -16,7 +21,7 @@ public class App extends Application {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewLists.fxml"));
             root = loader.load();
-            stage.setTitle("To-Do List");
+            stage.setTitle("To-Do list");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

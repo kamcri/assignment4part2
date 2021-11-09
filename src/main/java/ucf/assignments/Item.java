@@ -16,7 +16,7 @@ public class Item {
 
     private String description;
     private LocalDate dueDate;
-    private boolean completed = false;
+    boolean completed = false;
 
     public Item() {
         this.setDueDate(dueDate);
@@ -57,24 +57,5 @@ public class Item {
         }
     }
 
-    public void deleteItem(List list, Item item){
-        list.itemsList.remove(item);
-    }
-
-    public void addItem(List list, Item item){
-        list.itemsList.add(item);
-    }
-
-    public void markComplete(Item item){
-        if(!item.completed){
-            item.completed = true;
-        }
-    }
-
-    public void markIncomplete(Item item){
-        if(item.completed){
-            item.completed = false;
-        }
-    }
 
 }
