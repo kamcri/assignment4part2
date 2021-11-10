@@ -32,6 +32,10 @@ public class List {
         this.itemsList = new ArrayList<Item>();
     }
 
+    public ArrayList<Item> getItemsList(){
+        return itemsList;
+    }
+
     public void setItemsList(ArrayList<Item> itemsList) {
         this.itemsList = itemsList;
     }
@@ -76,10 +80,6 @@ public class List {
     public void deleteList(){
         //get name of list array list "Lists"
         //return new array list
-    }
-
-    public void editList(){
-        //new window
     }
 
     public void save(){

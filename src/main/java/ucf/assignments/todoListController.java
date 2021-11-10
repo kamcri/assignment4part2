@@ -58,7 +58,11 @@ public class todoListController implements Initializable {
     @FXML
     private ListView<String> allListsView;//should it be <list> or <string>
     @FXML
-    private ListView<Item> allItemsView;
+    private TableView<Item> allItemsView;
+    @FXML
+    private TableColumn<Item, String> descriptionColumn;
+    @FXML
+    private TableColumn<Item, String> dueDateColumn;
 
     //list model
     List list = new List();
@@ -77,6 +81,7 @@ public class todoListController implements Initializable {
     public void deleteListButton(ActionEvent event) {
         list.deleteList();
     }
+    //works
     @FXML
     public void editListButton(ActionEvent event){
         Parent root;
@@ -107,6 +112,11 @@ public class todoListController implements Initializable {
     }
 
     @FXML
+    public void addItemButton(ActionEvent event){
+
+    }
+
+    @FXML
     public void markCompleteButton(ActionEvent event){
 
     }
@@ -119,9 +129,6 @@ public class todoListController implements Initializable {
     //opens edit item window
     @FXML
     public void editItemButton(ActionEvent event){
-        /*if(event.getSource() == btnEditItem){
-            loadStage("/editItemWindow.fxml");
-        }*/
         Parent root;
         try{
             root = FXMLLoader.load(getClass().getClassLoader().getResource("editItemWindow.fxml"));
@@ -161,6 +168,9 @@ public class todoListController implements Initializable {
                 "Show Completed Tasks",
                 "Show Incomplete Tasks"
         );
+        //if displayCB = show...{}
+
+        itemOB = FXCollections.observableArrayList(list.getItemsList());
 
         //populating list views
         allListsView.setItems(listOB);//when adding to the lists view, add it to the observable list
