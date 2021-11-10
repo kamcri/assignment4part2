@@ -124,7 +124,7 @@ public class ListController implements Initializable {
         try{
             root = FXMLLoader.load(getClass().getClassLoader().getResource("editItemWindow.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("IDK");
+            stage.setTitle("Edit Item");
             stage.setScene(new Scene(root));
             stage.show();
         }

@@ -51,20 +51,8 @@ public class EditItemController implements Initializable {
     public void cancelButtonClicked(ActionEvent event){
         /*
         * automatically load view lists window.*/
-        /*if(event.getSource() == btnCancel){
-            loadStage("/todoListWindow.fxml");
-        }*/
-        Parent root;
-        try{
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("todoWindow.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("IDK");
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 
     @Override
