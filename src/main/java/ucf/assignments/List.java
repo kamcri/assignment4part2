@@ -73,16 +73,13 @@ public class List {
         return sortedItemsList;
     }
 
-
-    public ArrayList<List> deleteList(){
+    public void deleteList(){
         //get name of list array list "Lists"
         //return new array list
     }
 
-    public ArrayList<List> editList(){
-        //search for list title in array list
-        //edit the title
-        //return new list
+    public void editList(){
+        //new window
     }
 
     public void save(){
@@ -102,9 +99,9 @@ public class List {
 
     }
 
-    /*public ArrayList<List> loadAll(){
+    public void loadAll(){
         //return the saved list
-    }*/
+    }
 
     public void markComplete(Item item){
         if(!item.completed){

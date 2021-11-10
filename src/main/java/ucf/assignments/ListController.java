@@ -55,21 +55,20 @@ public class ListController implements Initializable {
     @FXML
     private ComboBox<String> displayCB;
     @FXML
-    private ListView<List> allListsView;
+    private ListView<String> allListsView;//should it be <list> or <string>
     @FXML
     private ListView<Item> allItemsView;
 
-
     //list model
     List list = new List();
-    ArrayList<List> toDoList = new ArrayList<>();
-    ObservableList<List> listOB = FXCollections.observableArrayList();
+    //observable lists
+    ObservableList<String> listOB = FXCollections.observableArrayList();//should it be <list> or <string>
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
 
     @FXML
     public void addListButton(){
-        //get text for listTitle and add new list to Lists
-
+        //get text from text field and add it to the list
+        listOB.add(nameOfListTF.getText());
     }
     @FXML
     public void deleteListButton(ActionEvent event) {
@@ -106,7 +105,7 @@ public class ListController implements Initializable {
 
     }
 
-    //opens new window
+    //opens edit item window
     @FXML
     public void editItemButton(ActionEvent event){
         if(event.getSource() == btnEditItem){
@@ -134,10 +133,16 @@ public class ListController implements Initializable {
     //loads a new window
     private void loadStage(String fxml){
         Parent root = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        Stage stage = null;
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
     }
 
     @Override
@@ -150,7 +155,7 @@ public class ListController implements Initializable {
         );
 
         //populating list views
-        allListsView.setItems(listOB);
+        allListsView.setItems(listOB);//when adding to the lists view, add it to the observable list
         allItemsView.setItems(itemOB);
 
         //selecting one item

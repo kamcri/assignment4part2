@@ -12,14 +12,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = null;
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewLists.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editItemWindow.fxml"));
             root = loader.load();
             stage.setTitle("To-Do list");
             Scene scene = new Scene(root);
