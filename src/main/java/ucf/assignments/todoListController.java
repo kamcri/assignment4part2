@@ -27,12 +27,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ListController implements Initializable {
+public class todoListController implements Initializable {
 
     @FXML
     private TextField nameOfListTF;
     @FXML
     private TextField descriptionTF;
+    @FXML
+    private TextField due;
     @FXML
     private Button btnAddList;
     @FXML
@@ -52,8 +54,6 @@ public class ListController implements Initializable {
     @FXML
     private Button btnAddItem;
     @FXML
-    private DatePicker due;
-    @FXML
     private ComboBox<String> displayCB;
     @FXML
     private ListView<String> allListsView;//should it be <list> or <string>
@@ -66,11 +66,13 @@ public class ListController implements Initializable {
     ObservableList<String> listOB = FXCollections.observableArrayList();//should it be <list> or <string>
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
 
+    //works
     @FXML
     public void addListButton(){
         //get text from text field and add it to the list
         listOB.add(nameOfListTF.getText());
     }
+    //does not work
     @FXML
     public void deleteListButton(ActionEvent event) {
         list.deleteList();
@@ -81,7 +83,7 @@ public class ListController implements Initializable {
         try{
             root = FXMLLoader.load(getClass().getClassLoader().getResource("editListWindow.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("IDK");
+            stage.setTitle("Edit List");
             stage.setScene(new Scene(root));
             stage.show();
         }

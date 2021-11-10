@@ -36,7 +36,7 @@ public class EditItemController implements Initializable {
     public TextField newDescriptionTF;
 
     @FXML
-    public DatePicker dueDateField;
+    public TextField dueDateField;
 
 
     @FXML
