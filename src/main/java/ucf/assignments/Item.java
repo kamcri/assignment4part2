@@ -15,13 +15,13 @@ import java.time.LocalDate;
 public class Item {
 
     private String description;
-    private LocalDate dueDate;
+    //private String dueDate;
     boolean completed = false;
 
-    public Item() {
-        this.setDueDate(dueDate);
-        this.setDescription(description);
-        this.setCompleted(completed);
+    public Item(String description, String dueDate, boolean completed) {
+        this.description = description;
+        //this.dueDate = dueDate;
+        this.completed = completed;
     }
 
     public String getDescription(){
@@ -32,13 +32,13 @@ public class Item {
         this.description = description;
     }
 
-    public LocalDate getDueDate() {
+    /*public String getDueDate() {
         return dueDate;
-    }
+    }*/
 
-    public void setDueDate(LocalDate dueDate) {
+    /*public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
-    }
+    }*/
 
     public boolean getCompleted() {
         return completed;
@@ -48,7 +48,7 @@ public class Item {
         this.completed = completed;
     }
 
-    //call this method in the "EditItemController"
+    //call this method in the "EditItemController"??
     public void editItem(List list, Item old, Item newItem){
             for(int i = 0; i < list.itemsList.size(); i ++){
                 if(list.itemsList.get(i) == old){

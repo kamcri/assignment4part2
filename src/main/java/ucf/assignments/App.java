@@ -18,7 +18,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = null;
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editItemWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/todoListWindow.fxml"));
             root = loader.load();
             stage.setTitle("To-Do list");
             Scene scene = new Scene(root);
@@ -27,7 +27,8 @@ public class App extends Application {
 
         }
         catch (IOException e){
-            System.out.println("Error" + e.getMessage());
+            //System.out.println("Error" + e.getMessage());
+            e.printStackTrace();
         }
 
     }

@@ -15,8 +15,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /* Created a window that will pop up when "Edit Item" button is pressed.
@@ -48,22 +51,19 @@ public class EditItemController implements Initializable {
     public void cancelButtonClicked(ActionEvent event){
         /*
         * automatically load view lists window.*/
-        if(event.getSource() == btnCancel){
+        /*if(event.getSource() == btnCancel){
             loadStage("/todoListWindow.fxml");
-        }
-    }
-
-    private void loadStage(String fxml){
-        Parent root = null;
-        Stage stage = null;
+        }*/
+        Parent root;
         try{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("todoWindow.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("IDK");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 

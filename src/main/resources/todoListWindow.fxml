@@ -36,7 +36,7 @@
                 <DatePicker layoutX="214.0" layoutY="327.0" prefHeight="25.0" prefWidth="163.0" promptText="Select Due Date" />
                 <Button fx:id="btnAddItem" layoutX="389.0" layoutY="325.0" mnemonicParsing="false" text="Add Item" />
                 <Button fx:id="btnDeleteItem" layoutX="350.0" layoutY="411.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Delete Item" />
-                <Button fx:id="btnEditItem" layoutX="221.0" layoutY="411.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Edit Item" />
+                <Button fx:id="btnEditItem" layoutX="221.0" layoutY="411.0" mnemonicParsing="false" onAction="#editItemButton" prefHeight="30.0" prefWidth="111.0" text="Edit Item" />
                 <Button layoutX="221.0" layoutY="213.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Mark Complete" />
                 <Button fx:id="btnSaveList" layoutX="14.0" layoutY="411.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save List" />
                 <Button fx:id="btnDeleteList" layoutX="14.0" layoutY="363.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Delete List" />

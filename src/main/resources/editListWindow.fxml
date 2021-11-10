@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="113.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.editListController">
+<AnchorPane prefHeight="113.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.EditListController">
    <children>
       <Label layoutX="156.0" layoutY="4.0" prefHeight="17.0" prefWidth="56.0" text="Edit List">
          <font>

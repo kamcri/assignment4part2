@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -76,8 +77,16 @@ public class ListController implements Initializable {
     }
     @FXML
     public void editListButton(ActionEvent event){
-        if(event.getSource() == btnEditList){
-            loadStage("/editListWindow.fxml");
+        Parent root;
+        try{
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("editListWindow.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("IDK");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
     @FXML
@@ -108,10 +117,22 @@ public class ListController implements Initializable {
     //opens edit item window
     @FXML
     public void editItemButton(ActionEvent event){
-        if(event.getSource() == btnEditItem){
+        /*if(event.getSource() == btnEditItem){
             loadStage("/editItemWindow.fxml");
+        }*/
+        Parent root;
+        try{
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("editItemWindow.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("IDK");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
+
 
     //delete method is in list
     @FXML
@@ -128,21 +149,6 @@ public class ListController implements Initializable {
     @FXML
     public void displayCBClicked(){
 
-    }
-
-    //loads a new window
-    private void loadStage(String fxml){
-        Parent root = null;
-        Stage stage = null;
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-            root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
-        }
     }
 
     @Override
@@ -162,19 +168,5 @@ public class ListController implements Initializable {
         allListsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         allItemsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        //Moved date time formatter into controller
-        due.setConverter(new StringConverter<LocalDate>() {
-            @Override
-            public String toString(LocalDate object) {
-                return null;
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                return null;
-            }
-            String pattern = "yyyy-MM-dd";
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-        });
     }
 }
