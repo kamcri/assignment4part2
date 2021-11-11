@@ -54,17 +54,18 @@
               </columns>
             </TableView>
                 <Button fx:id="btnLoadList" layoutX="389.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Load List" />
-            <DatePicker fx:id="dueDP" layoutX="212.0" layoutY="325.0" />
+            <DatePicker fx:id="dueDP" layoutX="212.0" layoutY="325.0" promptText="Select a date..." />
+            <TextField fx:id="dueDateTF" layoutX="491.0" layoutY="325.0" promptText="Enter a date..." />
             </children></AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="765.0">
             <children>
-                <Label layoutX="327.0" layoutY="14.0" prefHeight="20.0" prefWidth="111.0" text="Create New List">
+                <Label layoutX="38.0" layoutY="14.0" prefHeight="20.0" prefWidth="111.0" text="Create New List">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="nameOfListTF" layoutX="291.0" layoutY="51.0" prefHeight="25.0" prefWidth="184.0" promptText="Name of List..." />
-                <Button fx:id="btnAddList" layoutX="491.0" layoutY="51.0" mnemonicParsing="false" onAction="#addListButton" prefHeight="25.0" prefWidth="79.0" text="Add List" />
+                <TextField fx:id="nameOfListTF" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="184.0" promptText="Name of List..." />
+                <Button fx:id="btnAddList" layoutX="214.0" layoutY="45.0" mnemonicParsing="false" onAction="#addListButton" prefHeight="25.0" prefWidth="79.0" text="Add List" />
             </children></AnchorPane>
     </items>
 </SplitPane>

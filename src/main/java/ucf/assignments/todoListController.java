@@ -36,6 +36,8 @@ public class todoListController implements Initializable {
     @FXML
     private TextField descriptionTF;
     @FXML
+    private TextField dueDateTF;
+    @FXML
     private Button btnAddList;
     @FXML
     private Button btnLoadList;
@@ -129,7 +131,7 @@ public class todoListController implements Initializable {
             System.out.println("Description must be between 1 and 256 characters.");
         }
         else {
-            Item addedItem = new Item(desc, due, false);
+            Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
             //add new item to observable list
             itemOB.add(addedItem);
             descriptionTF.clear();
@@ -217,7 +219,7 @@ public class todoListController implements Initializable {
 
         //displays info in the columns. Due date is the only one not working
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("Description"));
-        dueDateColumn.setCellValueFactory(new PropertyValueFactory<Item, LocalDate>("Due Date"));
+        dueDateColumn.setCellValueFactory(new PropertyValueFactory<Item, LocalDate>("dueDate"));
         completeColumn.setCellValueFactory(new PropertyValueFactory<Item, CheckBox>("Completed"));
 
         //Table view will automatically update whenever itemOB changes
@@ -225,6 +227,7 @@ public class todoListController implements Initializable {
 
         //selecting one item
         allListsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        allItemsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
     }
 }
