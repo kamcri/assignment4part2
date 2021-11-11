@@ -5,6 +5,9 @@
 
 package ucf.assignments;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.time.LocalDate;
 
 /*
@@ -15,12 +18,12 @@ import java.time.LocalDate;
 public class Item {
 
     private String description;
-    //private String dueDate;
+    private LocalDate dueDate;
     boolean completed = false;
 
-    public Item(String description, String dueDate, boolean completed) {
+    public Item(String description, LocalDate dueDate, boolean completed) {
         this.description = description;
-        //this.dueDate = dueDate;
+        this.dueDate = dueDate;
         this.completed = completed;
     }
 
@@ -32,13 +35,13 @@ public class Item {
         this.description = description;
     }
 
-    /*public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
-    }*/
+    }
 
-    /*public void setDueDate(String dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }*/
+    }
 
     public boolean getCompleted() {
         return completed;

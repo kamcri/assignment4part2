@@ -9,6 +9,7 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -33,8 +35,6 @@ public class todoListController implements Initializable {
     private TextField nameOfListTF;
     @FXML
     private TextField descriptionTF;
-    @FXML
-    private TextField due;
     @FXML
     private Button btnAddList;
     @FXML
@@ -54,6 +54,8 @@ public class todoListController implements Initializable {
     @FXML
     private Button btnAddItem;
     @FXML
+    private DatePicker dueDP;
+    @FXML
     private ComboBox<String> displayCB;
     @FXML
     private ListView<String> allListsView;//should it be <list> or <string>
@@ -62,10 +64,13 @@ public class todoListController implements Initializable {
     @FXML
     private TableColumn<Item, String> descriptionColumn;
     @FXML
-    private TableColumn<Item, String> dueDateColumn;
+    private TableColumn<Item, LocalDate> dueDateColumn;
+    @FXML
+    private TableColumn<Item, CheckBox> completeColumn;
 
     //list model
     List list = new List();
+
     //observable lists
     ObservableList<String> listOB = FXCollections.observableArrayList();//should it be <list> or <string>
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
@@ -75,15 +80,17 @@ public class todoListController implements Initializable {
     public void addListButton(){
         //get text from text field and add it to the list
         listOB.add(nameOfListTF.getText());
+        allListsView.setItems(listOB);
     }
-    //does not work
+
     @FXML
     public void deleteListButton(ActionEvent event) {
-        list.deleteList();
+
     }
     //works
     @FXML
     public void editListButton(ActionEvent event){
+        //add if statement that checks if one list is selected
         Parent root;
         try{
             root = FXMLLoader.load(getClass().getClassLoader().getResource("editListWindow.fxml"));
@@ -113,6 +120,20 @@ public class todoListController implements Initializable {
 
     @FXML
     public void addItemButton(ActionEvent event){
+        //get text from description field and add it to description column
+        String desc = descriptionTF.getText();
+        //get due date from date picker
+        LocalDate due = dueDP.getValue();
+        //make boxes pop up instead of system out print?
+        if((desc.length() < 1) && !(desc.length() > 256)){
+            System.out.println("Description must be between 1 and 256 characters.");
+        }
+        else {
+            Item addedItem = new Item(desc, due, false);
+            //add new item to observable list
+            itemOB.add(addedItem);
+            descriptionTF.clear();
+        }
 
     }
 
@@ -162,6 +183,30 @@ public class todoListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //date formatter
+        dueDP.setConverter(new StringConverter<LocalDate>() {
+            String pattern = "yyyy-MM-dd";
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+            @Override
+            public String toString(LocalDate date) {
+                if(date != null){
+                    return dateTimeFormatter.format(date);
+                }
+                else
+                {
+                    return " ";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if(string != null && !string.isEmpty()){
+                    return LocalDate.parse(string, dateTimeFormatter);
+                }
+                else
+                    return null;
+            }
+        });
         //setting choice box for displaying items
         displayCB.getItems().addAll(
                 "Show All Tasks",
@@ -170,15 +215,16 @@ public class todoListController implements Initializable {
         );
         //if displayCB = show...{}
 
-        itemOB = FXCollections.observableArrayList(list.getItemsList());
+        //displays info in the columns. Due date is the only one not working
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("Description"));
+        dueDateColumn.setCellValueFactory(new PropertyValueFactory<Item, LocalDate>("Due Date"));
+        completeColumn.setCellValueFactory(new PropertyValueFactory<Item, CheckBox>("Completed"));
 
-        //populating list views
-        allListsView.setItems(listOB);//when adding to the lists view, add it to the observable list
+        //Table view will automatically update whenever itemOB changes
         allItemsView.setItems(itemOB);
 
         //selecting one item
         allListsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        allItemsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
     }
 }

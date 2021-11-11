@@ -116,8 +116,8 @@ public class List {
         list.itemsList.clear();
     }
 
-    public void addItem(List list, Item item){
-        list.itemsList.add(item);
+    public void addItem(Item item){
+        itemsList.add(item);
     }
 
     public void markIncomplete(Item item){
