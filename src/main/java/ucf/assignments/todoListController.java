@@ -36,31 +36,11 @@ public class todoListController implements Initializable {
     @FXML
     private TextField descriptionTF;
     @FXML
-    private TextField dueDateTF;
-    @FXML
-    private Button btnAddList;
-    @FXML
-    private Button btnLoadList;
-    @FXML
-    private Button btnDeleteList;
-    @FXML
-    private Button btnEditList;
-    @FXML
-    private Button btnSaveList;
-    @FXML
-    private Button btnSaveAll;
-    @FXML
-    private Button btnEditItem;
-    @FXML
-    private Button btnDeleteItem;
-    @FXML
-    private Button btnAddItem;
-    @FXML
     private DatePicker dueDP;
     @FXML
     private ComboBox<String> displayCB;
     @FXML
-    private ListView<String> allListsView;//should it be <list> or <string>
+    private ListView<String> allListsView;
     @FXML
     private TableView<Item> allItemsView;
     @FXML
@@ -74,22 +54,25 @@ public class todoListController implements Initializable {
     List list = new List();
 
     //observable lists
-    ObservableList<String> listOB = FXCollections.observableArrayList();//should it be <list> or <string>
+    ObservableList<String> listOB = FXCollections.observableArrayList();
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
+
+    //Array List
+    public ArrayList<List> toDoLists = new ArrayList<>();
 
     //works
     @FXML
     public void addListButton(){
         //get text from text field and add it to the list
         listOB.add(nameOfListTF.getText());
-        allListsView.setItems(listOB);
+        nameOfListTF.clear();
     }
 
     @FXML
     public void deleteListButton(ActionEvent event) {
 
     }
-    //works
+
     @FXML
     public void editListButton(ActionEvent event){
         //add if statement that checks if one list is selected
@@ -108,47 +91,52 @@ public class todoListController implements Initializable {
     @FXML
     public void saveListButton(ActionEvent event)
     {
-        list.save();
+
     }
     @FXML
     public void saveAllButton(ActionEvent event)
     {
-        list.saveAll();
+
     }
     @FXML
     public void loadListButton(ActionEvent event) throws IOException, ClassNotFoundException {
-        list.loadList();
+
     }
 
     @FXML
     public void addItemButton(ActionEvent event){
-        //get text from description field and add it to description column
-        String desc = descriptionTF.getText();
-        //get due date from date picker
-        LocalDate due = dueDP.getValue();
-        //make boxes pop up instead of system out print?
-        if((desc.length() < 1) && !(desc.length() > 256)){
-            System.out.println("Description must be between 1 and 256 characters.");
-        }
-        else {
-            Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
-            //add new item to observable list
-            itemOB.add(addedItem);
-            descriptionTF.clear();
-        }
+        //only add if a list is selected
+        while(true) {
+            String selectedList = allListsView.getSelectionModel().getSelectedItem();
+            if (selectedList.length() == 0) {
+                System.out.println("Please select a list to add item to.");
+            } else {
+                //get text from description field and add it to description column
+                String desc = descriptionTF.getText();
+                //get due date from date picker
+                LocalDate due = dueDP.getValue();
 
+                if ((desc.length() < 1) && !(desc.length() > 256)) {
+                    System.out.println("Description must be between 1 and 256 characters.");
+                } else {
+                    Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
+                    //add new item to observable list
+                    itemOB.add(addedItem);
+                    descriptionTF.clear();
+                    dueDP.setValue(null);
+                }
+                break;
+            }
+
+        }
     }
 
     @FXML
-    public void markCompleteButton(ActionEvent event){
-
+    public void deleteItemButton(ActionEvent event){
+        //get index of item and find it in the observable list
+        int itemIndex = allItemsView.getSelectionModel().getSelectedIndex();
+        itemOB.remove(itemIndex);
     }
-
-    @FXML
-    public void markIncompleteButton(ActionEvent event){
-
-    }
-
     //opens edit item window
     @FXML
     public void editItemButton(ActionEvent event){
@@ -165,10 +153,13 @@ public class todoListController implements Initializable {
         }
     }
 
-
-    //delete method is in list
     @FXML
-    public void deleteItemButton(ActionEvent event){
+    public void markCompleteButton(ActionEvent event){
+
+    }
+
+    @FXML
+    public void markIncompleteButton(ActionEvent event){
 
     }
 
@@ -176,11 +167,10 @@ public class todoListController implements Initializable {
     public void sortButton(ActionEvent event){
 
     }
-
     //handles showing all, complete, or incomplete items
     @FXML
     public void displayCBClicked(){
-
+        //move inside initialize?
     }
 
     @Override
@@ -215,7 +205,11 @@ public class todoListController implements Initializable {
                 "Show Completed Tasks",
                 "Show Incomplete Tasks"
         );
-        //if displayCB = show...{}
+        //if displayCB = show...{
+        // displayAll()
+        // displayComplete()
+        // displayIncomplete()
+        // }
 
         //displays info in the columns. Due date is the only one not working
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("Description"));
@@ -224,6 +218,7 @@ public class todoListController implements Initializable {
 
         //Table view will automatically update whenever itemOB changes
         allItemsView.setItems(itemOB);
+        allListsView.setItems(listOB);
 
         //selecting one item
         allListsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
