@@ -35,7 +35,7 @@
                 <Button fx:id="btnSaveList" layoutX="203.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save List" />
                 <Button fx:id="btnDeleteList" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onAction="#deleteListButton" prefHeight="30.0" prefWidth="79.0" text="Delete List" />
                 <Button fx:id="btnSaveAll" layoutX="293.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save All" />
-                <Button fx:id="btnEditList" layoutX="109.0" layoutY="404.0" mnemonicParsing="false" onAction="#editListButton" prefHeight="30.0" prefWidth="79.0" text="Edit List" />
+                <Button fx:id="btnEditList" layoutX="109.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Edit List" />
                 <Separator layoutX="207.0" layoutY="201.0" prefHeight="1.0" prefWidth="558.0" />
                 <Button layoutX="221.0" layoutY="17.0" minHeight="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Sort by Date" />
                 <ComboBox fx:id="displayCB" layoutX="587.0" layoutY="17.0" prefWidth="150.0" promptText="Display Options" />

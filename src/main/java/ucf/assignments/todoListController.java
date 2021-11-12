@@ -9,12 +9,10 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -50,43 +48,41 @@ public class todoListController implements Initializable {
     @FXML
     private TableColumn<Item, CheckBox> completeColumn;
 
-    //list model
-    List list = new List();
 
-    //observable lists
-    ObservableList<String> listOB = FXCollections.observableArrayList();
+    //observable lists for viewing.
+    ObservableList<String> listOB = FXCollections.observableArrayList();//Backed by the array list
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
 
-    //Array List
-    public ArrayList<List> toDoLists = new ArrayList<>();
+    //Array List for storing all lists
+    public ArrayList<List> toDoLists = new ArrayList<List>();
 
     //works
     @FXML
     public void addListButton(){
-        //get text from text field and add it to the list
+        //get text from text field and add it to the array list
+        String listTitle = nameOfListTF.getText();
+        List newList = new List(listTitle);
+        toDoLists.add(newList);
+        //add it to the observable list too
         listOB.add(nameOfListTF.getText());
+        //clear text field
         nameOfListTF.clear();
     }
 
     @FXML
     public void deleteListButton(ActionEvent event) {
-
+       //get the index of the list
+        int listIndex = allListsView.getSelectionModel().getSelectedIndex();
+        //remove from the array list
+        toDoLists.remove(listIndex);
+        //remove it from the list view
+        listOB.remove(listIndex);
     }
 
     @FXML
     public void editListButton(ActionEvent event){
         //add if statement that checks if one list is selected
-        Parent root;
-        try{
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("editListWindow.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Edit List");
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
     }
     @FXML
     public void saveListButton(ActionEvent event)
@@ -137,20 +133,14 @@ public class todoListController implements Initializable {
         int itemIndex = allItemsView.getSelectionModel().getSelectedIndex();
         itemOB.remove(itemIndex);
     }
+    @FXML
+    public void deleteAll(){
+
+    }
     //opens edit item window
     @FXML
     public void editItemButton(ActionEvent event){
-        Parent root;
-        try{
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("editItemWindow.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Edit Item");
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
     }
 
     @FXML

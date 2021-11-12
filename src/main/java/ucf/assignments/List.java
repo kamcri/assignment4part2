@@ -24,11 +24,11 @@ import java.lang.Class.*;
 * Moved "displayLists" methods here instead. */
 
 public class List {
-    ArrayList<List> toDoList; //represents all lists--titles.
+    String listName;
     ArrayList<Item> itemsList; //represents one to do list
 
-    public List(){
-        this.toDoList = new ArrayList<List>();
+    public List(String listName){
+        this.listName = listName;
         this.itemsList = new ArrayList<Item>();
     }
 

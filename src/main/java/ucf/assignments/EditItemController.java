@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 /* Created a window that will pop up when "Edit Item" button is pressed.
 *  This class deals with it. */
-public class EditItemController implements Initializable {
+public class EditItemController extends todoListController {
 
     @FXML
     public Button btnSave;
