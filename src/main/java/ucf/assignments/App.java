@@ -27,7 +27,6 @@ public class App extends Application {
 
         }
         catch (IOException e){
-            //System.out.println("Error" + e.getMessage());
             e.printStackTrace();
         }
 

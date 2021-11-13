@@ -27,8 +27,7 @@ public class List {
     String listName;
     ArrayList<Item> itemsList; //represents one to do list
 
-    public List(String listName){
-        this.listName = listName;
+    public List(){
         this.itemsList = new ArrayList<Item>();
     }
 
@@ -40,10 +39,14 @@ public class List {
         this.itemsList = itemsList;
     }
 
-    public void displayAllItems(){
-        //move to controller
+    public String getListName(){
+        return listName;
+    }
+    public void setListName(String listName){
+        this.listName = listName;
     }
 
+    //returns complete items in list
     public ArrayList<Item> completeItems() {
         ArrayList<Item> Complete = new ArrayList<Item>();
         for(Item item  : itemsList)
@@ -55,7 +58,7 @@ public class List {
         }
         return Complete;
     }
-
+    //returns incomplete items
     public ArrayList<Item> incompleteItems() {
         ArrayList<Item> Incomplete = new ArrayList<>();
         //search through original array list
@@ -77,10 +80,6 @@ public class List {
         return sortedItemsList;
     }
 
-    public void deleteList(){
-        //get name of list array list "Lists"
-        //return new array list
-    }
 
     public void save(){
         //search for list in array list
@@ -108,16 +107,9 @@ public class List {
             item.completed = true;
         }
     }
-    public void deleteItem(List list, Item item){
-        list.itemsList.remove(item);
-    }
 
     public void clearItems(List list){
-        list.itemsList.clear();
-    }
-
-    public void addItem(Item item){
-        itemsList.add(item);
+        itemsList.clear();
     }
 
     public void markIncomplete(Item item){

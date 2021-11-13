@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.7762478485370051" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="583.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.todoListController">
+<SplitPane dividerPositions="0.7607573149741824" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="583.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.todoListController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="410.0" prefWidth="765.0">
             <children>
@@ -22,20 +22,17 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <ListView fx:id="allListsView" layoutX="-1.0" layoutY="50.0" prefHeight="347.0" prefWidth="204.0" />
-                <Separator layoutX="205.0" orientation="VERTICAL" prefHeight="396.0" prefWidth="2.0" />
+                <ListView fx:id="allListsView" layoutX="-1.0" layoutY="50.0" prefHeight="248.0" prefWidth="203.0" />
+                <Separator layoutX="204.0" orientation="VERTICAL" prefHeight="295.0" prefWidth="7.0" />
                 <Label layoutX="410.0" layoutY="14.0" text="Items">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnDeleteItem" layoutX="221.0" layoutY="302.0" mnemonicParsing="false" onAction="#deleteItemButton" prefHeight="30.0" prefWidth="111.0" text="Delete Item" />
-                <Button fx:id="btnEditItem" layoutX="365.0" layoutY="302.0" mnemonicParsing="false" onAction="#editItemButton" prefHeight="30.0" prefWidth="111.0" text="Edit Item" />
+                <Button fx:id="btnDeleteItem" layoutX="221.0" layoutY="302.0" mnemonicParsing="false" onAction="#deleteItemButton" prefHeight="30.0" prefWidth="79.0" text="Delete Item" />
                 <Button layoutX="640.0" layoutY="302.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Mark Complete" />
-                <Button fx:id="btnSaveList" layoutX="203.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save List" />
-                <Button fx:id="btnDeleteList" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onAction="#deleteListButton" prefHeight="30.0" prefWidth="79.0" text="Delete List" />
-                <Button fx:id="btnSaveAll" layoutX="293.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save All" />
-                <Button fx:id="btnEditList" layoutX="109.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Edit List" />
+                <Button fx:id="btnDeleteList" layoutX="14.0" layoutY="302.0" mnemonicParsing="false" onAction="#deleteListButton" prefHeight="30.0" prefWidth="79.0" text="Delete List" />
+                <Button fx:id="btnEditList" layoutX="221.0" layoutY="350.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Edit List" />
                 <Separator layoutX="207.0" layoutY="201.0" prefHeight="1.0" prefWidth="558.0" />
                 <Button layoutX="221.0" layoutY="17.0" minHeight="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Sort by Date" />
                 <ComboBox fx:id="displayCB" layoutX="587.0" layoutY="17.0" prefWidth="150.0" promptText="Display Options" />
@@ -46,9 +43,19 @@
                   <TableColumn fx:id="completeColumn" prefWidth="97.0" text="Completed" />
               </columns>
             </TableView>
-                <Button fx:id="btnLoadList" layoutX="389.0" layoutY="404.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Load Previous List" />
+            <Label layoutX="407.0" layoutY="307.0" text="Edit Item">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="newDescriptionTF" layoutX="347.0" layoutY="339.0" prefHeight="25.0" prefWidth="403.0" promptText="Write new description..." />
+            <DatePicker fx:id="newDueDP" layoutX="348.0" layoutY="379.0" prefHeight="25.0" prefWidth="174.0" promptText="Select a new date..." />
+            <Button layoutX="549.0" layoutY="379.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Save" />
+                <Button fx:id="btnSaveList" layoutX="104.0" layoutY="302.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save List" />
+            <TextField layoutX="14.0" layoutY="352.0" prefHeight="25.0" prefWidth="184.0" promptText="Edit List..." />
+            <Button layoutX="690.0" layoutY="392.0" mnemonicParsing="false" onAction="#clearListButton" text="Clear All" />
             </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="765.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="765.0">
             <children>
                 <Label layoutX="38.0" layoutY="14.0" prefHeight="20.0" prefWidth="111.0" text="Create New List">
                     <font>
@@ -57,14 +64,15 @@
                 </Label>
                 <TextField fx:id="nameOfListTF" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="184.0" promptText="Name of List..." />
                 <Button fx:id="btnAddList" layoutX="214.0" layoutY="45.0" mnemonicParsing="false" onAction="#addListButton" prefHeight="25.0" prefWidth="79.0" text="Add List" />
-            <TextField fx:id="descriptionTF" layoutX="348.0" layoutY="43.0" prefHeight="30.0" prefWidth="403.0" promptText="Write a description..." />
+            <TextField fx:id="descriptionTF" layoutX="348.0" layoutY="43.0" prefHeight="25.0" prefWidth="403.0" promptText="Write a description..." />
                 <Label layoutX="505.0" layoutY="14.0" text="Add New Item">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
             <DatePicker fx:id="dueDP" layoutX="348.0" layoutY="84.0" promptText="Select a date..." />
-                <Button fx:id="btnAddItem" layoutX="540.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItemButton" text="Add Item" />
+                <Button fx:id="btnAddItem" layoutX="550.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItemButton" text="Add Item" />
+                <Button fx:id="btnLoadList" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Load Previous List" />
             </children></AnchorPane>
     </items>
 </SplitPane>

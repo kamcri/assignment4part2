@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -34,11 +35,15 @@ public class todoListController implements Initializable {
     @FXML
     private TextField descriptionTF;
     @FXML
+    private TextField newDescriptionTF;
+    @FXML
+    private DatePicker newDueDP;
+    @FXML
     private DatePicker dueDP;
     @FXML
     private ComboBox<String> displayCB;
     @FXML
-    private ListView<String> allListsView;
+    private ListView<List> allListsView;
     @FXML
     private TableView<Item> allItemsView;
     @FXML
@@ -48,50 +53,45 @@ public class todoListController implements Initializable {
     @FXML
     private TableColumn<Item, CheckBox> completeColumn;
 
-
     //observable lists for viewing.
-    ObservableList<String> listOB = FXCollections.observableArrayList();//Backed by the array list
+    ObservableList<List> listOB = FXCollections.observableArrayList();//Backed by the array list
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
 
     //Array List for storing all lists
-    public ArrayList<List> toDoLists = new ArrayList<List>();
+    public ArrayList<List> toDoLists = new ArrayList<List>(listOB);
 
     //works
     @FXML
     public void addListButton(){
-        //get text from text field and add it to the array list
-        String listTitle = nameOfListTF.getText();
-        List newList = new List(listTitle);
-        toDoLists.add(newList);
-        //add it to the observable list too
-        listOB.add(nameOfListTF.getText());
+        //make a new list
+        List list = new List();
+        //add it to the observable list
+        list.listName = nameOfListTF.getText();
+        listOB.add(list);
+        //add to the array list
+        toDoLists.add(new List());
         //clear text field
         nameOfListTF.clear();
     }
 
     @FXML
     public void deleteListButton(ActionEvent event) {
-       //get the index of the list
+        //find list index and remove it
         int listIndex = allListsView.getSelectionModel().getSelectedIndex();
-        //remove from the array list
-        toDoLists.remove(listIndex);
-        //remove it from the list view
         listOB.remove(listIndex);
-    }
-
-    @FXML
-    public void editListButton(ActionEvent event){
-        //add if statement that checks if one list is selected
-
+        toDoLists.remove(listIndex);
     }
     @FXML
-    public void saveListButton(ActionEvent event)
-    {
+    public void clearListButton(ActionEvent event){
+        allItemsView.getItems().clear();
+        allItemsView.refresh();
+    }
+    @FXML
+    public void saveListButton(ActionEvent event) {
 
     }
     @FXML
-    public void saveAllButton(ActionEvent event)
-    {
+    public void saveAllButton(ActionEvent event) {
 
     }
     @FXML
@@ -100,30 +100,28 @@ public class todoListController implements Initializable {
     }
 
     @FXML
-    public void addItemButton(ActionEvent event){
-        //only add if a list is selected
-        while(true) {
-            String selectedList = allListsView.getSelectionModel().getSelectedItem();
-            if (selectedList.length() == 0) {
-                System.out.println("Please select a list to add item to.");
+    public void addItemButton(ActionEvent event) {
+        List list = allListsView.getSelectionModel().getSelectedItem();
+        int selectedIndex = allListsView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) {
+            System.out.println("Please select list to add item to.");
+        } else {
+            //get text from description field and add it to description column
+            String desc = descriptionTF.getText();
+            //get due date from date picker
+            LocalDate due = dueDP.getValue();
+            if ((desc.length() < 1) && !(desc.length() > 256)) {
+                System.out.println("Description must be between 1 and 256 characters.");
             } else {
-                //get text from description field and add it to description column
-                String desc = descriptionTF.getText();
-                //get due date from date picker
-                LocalDate due = dueDP.getValue();
-
-                if ((desc.length() < 1) && !(desc.length() > 256)) {
-                    System.out.println("Description must be between 1 and 256 characters.");
-                } else {
-                    Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
-                    //add new item to observable list
-                    itemOB.add(addedItem);
-                    descriptionTF.clear();
-                    dueDP.setValue(null);
-                }
-                break;
+                Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
+                //add new item
+                itemOB.add(addedItem);
+                list = addItem(desc, due, selectedIndex);
+                toDoLists.add(list);
+                //clear fields
+                descriptionTF.clear();
+                dueDP.setValue(null);
             }
-
         }
     }
 
@@ -134,12 +132,29 @@ public class todoListController implements Initializable {
         itemOB.remove(itemIndex);
     }
     @FXML
-    public void deleteAll(){
-
-    }
-    //opens edit item window
-    @FXML
     public void editItemButton(ActionEvent event){
+        //make sure item is selected
+        /*Item selectedItem = allItemsView.getSelectionModel().getSelectedItem();
+        //find selected item index
+        int itemIndex = allItemsView.getSelectionModel().getSelectedIndex();
+
+        if(selectedItem.)
+        //get new description and dates from text fields
+        String newDesc = newDescriptionTF.getText();
+        LocalDate newDue = newDueDP.getValue();
+
+        if (newDesc.length() == 0 && newDesc.length() > 256) {
+            System.out.println("Description must be between 1 and 256 characters.");
+        }else{
+            //create a new item type and set it equal to the old item in the array list
+            Item newItem = new Item(newDesc, newDue, false);
+            newItem.setDescription(newDesc);
+            newItem.setDueDate(newDue);
+
+            itemOB.set(itemIndex, newItem);
+            //toDoLists.set(itemIndex, newItem);
+        }
+        //add the item to the observable list too*/
 
     }
 
@@ -163,6 +178,15 @@ public class todoListController implements Initializable {
         //move inside initialize?
     }
 
+    public List addItem(String description, LocalDate dueDate, int index){
+        //call in addItemButton method
+        List list = toDoLists.get(index);
+        Item item = new Item(description, dueDate, false);
+        list.itemsList.add(item);
+
+        return list;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //date formatter
@@ -179,7 +203,6 @@ public class todoListController implements Initializable {
                     return " ";
                 }
             }
-
             @Override
             public LocalDate fromString(String string) {
                 if(string != null && !string.isEmpty()){
@@ -209,6 +232,19 @@ public class todoListController implements Initializable {
         //Table view will automatically update whenever itemOB changes
         allItemsView.setItems(itemOB);
         allListsView.setItems(listOB);
+
+        allListsView.setCellFactory(param -> new ListCell<List>(){
+            @Override
+            protected void updateItem(List list, boolean empty){
+                super.updateItem(list, empty);
+                if(empty || list == null || list.getListName() == null){
+                    setText(null);
+                }
+                else{
+                    setText(list.getListName());
+                }
+            }
+        });
 
         //selecting one item
         allListsView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
