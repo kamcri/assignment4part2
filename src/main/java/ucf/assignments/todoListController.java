@@ -171,7 +171,13 @@ public class todoListController implements Initializable {
 
     @FXML
     public void markIncompleteButton(ActionEvent event){
+        List list = allListsView.getSelectionModel().getSelectedItem();
+        Item item = allItemsView.getSelectionModel().getSelectedItem();
+        int itemIndex = allItemsView.getSelectionModel().getFocusedIndex();
 
+        list.markIncomplete(item);
+        itemOB.add(item);
+        itemOB.remove(itemIndex);
     }
 
     @FXML
