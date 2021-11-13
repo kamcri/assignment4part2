@@ -51,7 +51,7 @@ public class todoListController implements Initializable {
     @FXML
     private TableColumn<Item, LocalDate> dueDateColumn;
     @FXML
-    private TableColumn<Item, CheckBox> completeColumn;
+    private TableColumn<Boolean, CheckBox> completeColumn;
 
     //observable lists for viewing.
     ObservableList<List> listOB = FXCollections.observableArrayList();//Backed by the array list
@@ -160,7 +160,13 @@ public class todoListController implements Initializable {
 
     @FXML
     public void markCompleteButton(ActionEvent event){
+        List list = allListsView.getSelectionModel().getSelectedItem();
+        Item item = allItemsView.getSelectionModel().getSelectedItem();
+        int itemIndex = allItemsView.getSelectionModel().getFocusedIndex();
 
+        list.markComplete(item);
+        itemOB.add(item);
+        itemOB.remove(itemIndex);
     }
 
     @FXML
@@ -224,10 +230,10 @@ public class todoListController implements Initializable {
         // displayIncomplete()
         // }
 
-        //displays info in the columns. Due date is the only one not working
+        //displays info in the columns.
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("Description"));
         dueDateColumn.setCellValueFactory(new PropertyValueFactory<Item, LocalDate>("dueDate"));
-        completeColumn.setCellValueFactory(new PropertyValueFactory<Item, CheckBox>("Completed"));
+        completeColumn.setCellValueFactory(new PropertyValueFactory<Boolean, CheckBox>("Completed"));
 
         //Table view will automatically update whenever itemOB changes
         allItemsView.setItems(itemOB);

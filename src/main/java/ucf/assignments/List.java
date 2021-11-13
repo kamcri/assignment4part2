@@ -108,10 +108,6 @@ public class List {
         }
     }
 
-    public void clearItems(List list){
-        itemsList.clear();
-    }
-
     public void markIncomplete(Item item){
         if(item.completed){
             item.completed = false;
