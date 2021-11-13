@@ -132,13 +132,11 @@ public class todoListController implements Initializable {
         itemOB.remove(itemIndex);
     }
     @FXML
-    public void editItemButton(ActionEvent event){
-        //make sure item is selected
-        /*Item selectedItem = allItemsView.getSelectionModel().getSelectedItem();
+    public void saveEditButton(ActionEvent event){
+        List list;
         //find selected item index
         int itemIndex = allItemsView.getSelectionModel().getSelectedIndex();
 
-        if(selectedItem.)
         //get new description and dates from text fields
         String newDesc = newDescriptionTF.getText();
         LocalDate newDue = newDueDP.getValue();
@@ -152,9 +150,11 @@ public class todoListController implements Initializable {
             newItem.setDueDate(newDue);
 
             itemOB.set(itemIndex, newItem);
-            //toDoLists.set(itemIndex, newItem);
+            list = addItem(newDesc, newDue, itemIndex);
+            toDoLists.add(list);
+            newDescriptionTF.clear();
+            newDueDP.setValue(null);
         }
-        //add the item to the observable list too*/
 
     }
 
