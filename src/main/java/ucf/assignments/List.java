@@ -46,12 +46,26 @@ public class List {
         this.listName = listName;
     }
 
+    public void addItem(Item item){
+        itemsList.add(item);
+    }
+
+    public ArrayList<Item> allItems(){
+        ArrayList<Item> all = new ArrayList<>();
+        for(Item item : itemsList){
+            if(item.getCompleted() || !item.getCompleted())
+            {
+                all.add(item);
+            }
+        }
+        return all;
+    }
     //returns complete items in list
     public ArrayList<Item> completeItems() {
         ArrayList<Item> Complete = new ArrayList<Item>();
-        for(Item item  : itemsList)
+        for(Item item : itemsList)
         {
-            if(!item.getCompleted())
+            if(item.getCompleted())
             {
                 Complete.add(item);
             }
@@ -70,38 +84,6 @@ public class List {
             }
         }
         return Incomplete;
-    }
-
-    public ArrayList<Item> displayAllItems(ArrayList<Item> items){
-        //displays all items of a list.
-        ArrayList<Item> allItems = new ArrayList<>();
-        for(Item item : items){
-
-        }
-        return allItems;
-    }
-
-    public ArrayList<Item> displayComplete(ArrayList<Item> items) {
-        //Initialize a new ArrayList<Item> Complete
-        ArrayList<Item> complete = new ArrayList<>();
-        //Search through original array list. If complete is true, add item to the 'Complete' ArrayList
-        for(Item item : items){
-            if(item.getCompleted()){
-                complete.add(item);
-            }
-        }
-        return complete;
-    }
-
-    public ArrayList<Item> displayIncomplete(ArrayList<Item> items) {
-        ArrayList<Item> incomplete = new ArrayList<>();
-        for(Item item : items){
-            if(!item.getCompleted()){
-                incomplete.add(item);
-            }
-        }
-        //return the new list
-        return incomplete;
     }
 
     public void markComplete(Item item){

@@ -104,12 +104,14 @@ public class todoListController implements Initializable {
             if ((desc.length() < 1) && !(desc.length() > 256)) {
                 System.out.println("Description must be between 1 and 256 characters.");
             } else {
-                Item addedItem = new Item(descriptionTF.getText(), dueDP.getValue(), false);
+                Item addedItem = new Item(desc, due, false);
+
                 //add new item
                 itemOB.add(addedItem);
-                list = addItem(desc, due, selectedIndex);
+                list.addItem(addedItem);
                 toDoLists.add(list);
                 items.add(addedItem);
+
                 //clear fields
                 descriptionTF.clear();
                 dueDP.setValue(null);
@@ -184,16 +186,16 @@ public class todoListController implements Initializable {
         String value = displayCB.getValue();
 
         if(value.equals("Show All Tasks")) {
-            itemOB = FXCollections.observableArrayList(list.displayAllItems(items));
+            itemOB = FXCollections.observableArrayList(list.allItems());
             allItemsView.setItems(itemOB);
         }
-        if(value.equals("Show Completed Tasks")){
-            itemOB = FXCollections.observableArrayList(list.displayComplete(items));
+        else if(value.equals("Show Completed Tasks")){
+            itemOB = FXCollections.observableArrayList(list.completeItems());
             allItemsView.setItems(itemOB);
 
         }
-        if(value.equals("Show Incomplete Tasks")){
-            itemOB = FXCollections.observableArrayList(list.displayIncomplete(items));
+        else if(value.equals("Show Incomplete Tasks")){
+            itemOB = FXCollections.observableArrayList(list.incompleteItems());
             allItemsView.setItems(itemOB);
         }
     }
