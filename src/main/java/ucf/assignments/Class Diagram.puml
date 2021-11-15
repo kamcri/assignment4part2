@@ -21,8 +21,8 @@ markComplete()
 markIncomplete()
 }
 class Item{
-description
-dueDate
+-description
+-dueDate
 completed
 getDescription()
 setDescription()
@@ -32,6 +32,10 @@ getCompleted()
 setCompleted()
 }
 class todoListController{
+listOB
+itemOB
++toDoLists
++items
 addListButton()
 deleteListButton()
 clearListButton()

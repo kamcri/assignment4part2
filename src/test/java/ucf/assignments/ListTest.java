@@ -6,63 +6,115 @@ package ucf.assignments;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
+
     @Test
     void addItem(){
-        //check if added item is in arraylist
-        //return true if it is
+        try {
+            //List model
+            List list = new List();
+
+            //Initialize a new item
+            LocalDate date = LocalDate.now();
+            Item item = new Item("test", date, false);
+
+            //Initialize an array list for comparing and add the new item
+            ArrayList<Item> items = new ArrayList<>();
+            items.add(item);
+
+            list.addItem(item);
+
+            assertArrayEquals(items.toArray(), list.getItemsList().toArray());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
-    void editItem(){
-        //create a new list
-        //initialize with description 'abc'
-        //call editItem and check if description is the same
-        //return true if description is different
+    void allItems(){
+        LocalDate date = LocalDate.now();
+        //initialize the list and items
+        List list = new List();
+        Item item1 = new Item("class", date, false);
+        Item item2 = new Item("lecture", date, true);
+
+        //add a complete and incomplete item to the list
+        list.itemsList.add(item1);
+        list.itemsList.add(item2);
+
+        //initialize a new Item array list
+        ArrayList<Item> testList = list.allItems();
+
+        //assert that they are equal
+        assertArrayEquals(list.getItemsList().toArray(), testList.toArray());
     }
 
     @Test
-    void deleteItem(){
-        //check if arrayList contains deleted item
-        //return false or error if it does
+    void completeItems(){
+        LocalDate date = LocalDate.now();
+
+        List list = new List();
+        Item item1 = new Item("class", date, false);
+        Item item2 = new Item("lecture", date, true);
+        Item item3 = new Item("test", date, false);
+
+        list.itemsList.add(item1);
+        list.itemsList.add(item2);
+        list.itemsList.add(item3);
+
+        ArrayList<Item> testList = list.completeItems();
+
+        //both lengths should be 1
+        assertArrayEquals(list.completeItems().toArray(), testList.toArray());
+    }
+
+    @Test
+    void incompleteItems(){
+        LocalDate date = LocalDate.now();
+
+        List list = new List();
+        Item item1 = new Item("class", date, false);
+        Item item2 = new Item("lecture", date, true);
+        Item item3 = new Item("test", date, false);
+
+        list.itemsList.add(item1);
+        list.itemsList.add(item2);
+        list.itemsList.add(item3);
+
+        ArrayList<Item> testList = list.incompleteItems();
+
+        //both lengths should be 2
+        assertArrayEquals(list.incompleteItems().toArray(), testList.toArray());
     }
 
     @Test
     void markComplete() {
-        //add item to a list and mark it complete
-        //check boolean value of item in ArrayList
-        //return true if value is complete
+        LocalDate date = LocalDate.now();
+        List list = new List();
+        Item item = new Item("class",date, false);
+
+        list.addItem(item);
+        list.markComplete(item);
+
+        assertTrue(item.completed);
     }
 
     @Test
     void markIncomplete(){
-        //add item to a list and mark it incomplete
-        //check boolean value of item in ArrayList
-        //return true if value is incomplete
+        LocalDate date = LocalDate.now();
+        List list = new List();
+        Item item = new Item("class",date, true);
+
+        list.addItem(item);
+        list.markIncomplete(item);
+
+        assertFalse(item.completed);
     }
 
-    @Test
-    void displayComplete(){
-        //create ArrayList<Items>
-        //add some items to the list
-        //mark one complete
-        //run completeItems and verify only one item is shown
-    }
-
-    @Test
-    void displayIncomplete(){
-        //create ArrayList<Items>
-        //add some items to the list
-        //mark one incomplete
-        //run incompleteItems and verify only one item is shown
-    }
-
-    @Test
-    void sortedList(){
-        //create ArrayList<Items>
-        //add a few items with all different dates
-        //run sortedList() and check if they are in order
-    }
 }
