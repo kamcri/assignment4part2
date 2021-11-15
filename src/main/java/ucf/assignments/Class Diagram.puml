@@ -1,0 +1,51 @@
+@startuml
+
+class App{
+start()
+main()
+}
+class List{
+listName
+itemsList
+List()
+getItemsList()
+setItemsList()
+getListName()
+setListName()
+completeItems()
+incompleteItems()
+displayAllItems()
+displayComplete()
+displayIncomplete()
+markComplete()
+markIncomplete()
+}
+class Item{
+description
+dueDate
+completed
+getDescription()
+setDescription()
+getDueDate()
+setDueDate()
+getCompleted()
+setCompleted()
+}
+class todoListController{
+addListButton()
+deleteListButton()
+clearListButton()
+addItemButton()
+deleteItemButton()
+saveEditButton()
+markCompleteButton()
+markIncompleteButton()
+displayCBClicked()
+saveListButton()
+loadListButton()
+addItem()
+saveList()
+initialize()
+}
+
+@enduml

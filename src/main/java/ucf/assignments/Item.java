@@ -50,16 +50,4 @@ public class Item {
         this.completed = completed;
     }
 
-    //call this method in the "EditItemController"??
-    public void editItem(List list, Item old, Item newItem){
-            for(int i = 0; i < list.itemsList.size(); i ++){
-                if(list.itemsList.get(i) == old){
-                    list.itemsList.set(i, newItem);
-                }
-        }
-    }
-
-
-
-
 }

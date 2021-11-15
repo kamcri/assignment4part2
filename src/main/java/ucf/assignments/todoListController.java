@@ -18,10 +18,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,8 @@ public class todoListController implements Initializable {
     private TextField descriptionTF;
     @FXML
     private TextField newDescriptionTF;
+    @FXML
+    private TextField pathTF;
     @FXML
     private DatePicker newDueDP;
     @FXML
@@ -59,8 +62,8 @@ public class todoListController implements Initializable {
 
     //Array List for storing all lists
     public ArrayList<List> toDoLists = new ArrayList<List>(listOB);
+    public ArrayList<Item> items = new ArrayList<Item>(itemOB);
 
-    //works
     @FXML
     public void addListButton(){
         //make a new list
@@ -69,7 +72,7 @@ public class todoListController implements Initializable {
         list.listName = nameOfListTF.getText();
         listOB.add(list);
         //add to the array list
-        toDoLists.add(new List());
+        toDoLists.add(list);
         //clear text field
         nameOfListTF.clear();
     }
@@ -85,18 +88,6 @@ public class todoListController implements Initializable {
     public void clearListButton(ActionEvent event){
         allItemsView.getItems().clear();
         allItemsView.refresh();
-    }
-    @FXML
-    public void saveListButton(ActionEvent event) {
-
-    }
-    @FXML
-    public void saveAllButton(ActionEvent event) {
-
-    }
-    @FXML
-    public void loadListButton(ActionEvent event) throws IOException, ClassNotFoundException {
-
     }
 
     @FXML
@@ -118,6 +109,7 @@ public class todoListController implements Initializable {
                 itemOB.add(addedItem);
                 list = addItem(desc, due, selectedIndex);
                 toDoLists.add(list);
+                items.add(addedItem);
                 //clear fields
                 descriptionTF.clear();
                 dueDP.setValue(null);
@@ -152,6 +144,7 @@ public class todoListController implements Initializable {
             itemOB.set(itemIndex, newItem);
             list = addItem(newDesc, newDue, itemIndex);
             toDoLists.add(list);
+            items.add(newItem);
             newDescriptionTF.clear();
             newDueDP.setValue(null);
         }
@@ -165,8 +158,11 @@ public class todoListController implements Initializable {
         int itemIndex = allItemsView.getSelectionModel().getFocusedIndex();
 
         list.markComplete(item);
-        itemOB.add(item);
+        itemOB.add(itemIndex, item);
+        items.add(itemIndex, item);
         itemOB.remove(itemIndex);
+        items.remove(itemIndex);
+        allItemsView.refresh();
     }
 
     @FXML
@@ -177,17 +173,38 @@ public class todoListController implements Initializable {
 
         list.markIncomplete(item);
         itemOB.add(item);
+        items.add(item);
         itemOB.remove(itemIndex);
+        items.remove(itemIndex);
     }
 
-    @FXML
-    public void sortButton(ActionEvent event){
-
-    }
-    //handles showing all, complete, or incomplete items
     @FXML
     public void displayCBClicked(){
-        //move inside initialize?
+        List list = allListsView.getSelectionModel().getSelectedItem();
+        String value = displayCB.getValue();
+
+        if(value.equals("Show All Tasks")) {
+            itemOB = FXCollections.observableArrayList(list.displayAllItems(items));
+            allItemsView.setItems(itemOB);
+        }
+        if(value.equals("Show Completed Tasks")){
+            itemOB = FXCollections.observableArrayList(list.displayComplete(items));
+            allItemsView.setItems(itemOB);
+
+        }
+        if(value.equals("Show Incomplete Tasks")){
+            itemOB = FXCollections.observableArrayList(list.displayIncomplete(items));
+            allItemsView.setItems(itemOB);
+        }
+    }
+    @FXML
+    public void saveListButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void loadListButton(ActionEvent event) throws IOException, ClassNotFoundException {
+
     }
 
     public List addItem(String description, LocalDate dueDate, int index){
@@ -198,13 +215,16 @@ public class todoListController implements Initializable {
 
         return list;
     }
+    public void saveList(String path) {
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //date formatter
         dueDP.setConverter(new StringConverter<LocalDate>() {
-            String pattern = "yyyy-MM-dd";
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+            final String pattern = "yyyy-MM-dd";
+            final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
             @Override
             public String toString(LocalDate date) {
                 if(date != null){
@@ -230,11 +250,6 @@ public class todoListController implements Initializable {
                 "Show Completed Tasks",
                 "Show Incomplete Tasks"
         );
-        //if displayCB = show...{
-        // displayAll()
-        // displayComplete()
-        // displayIncomplete()
-        // }
 
         //displays info in the columns.
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("Description"));

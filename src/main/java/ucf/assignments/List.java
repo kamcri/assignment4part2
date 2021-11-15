@@ -72,34 +72,36 @@ public class List {
         return Incomplete;
     }
 
-    public ArrayList<Item> sortedList(ArrayList<Item> itemsList){
-        Item item;
-        ArrayList<Item> sortedItemsList = new ArrayList<Item>();
-        //On passed ArrayList, use comparator on getDueDate() from Item class
-        //copy into sortedItemsList
-        return sortedItemsList;
+    public ArrayList<Item> displayAllItems(ArrayList<Item> items){
+        //displays all items of a list.
+        ArrayList<Item> allItems = new ArrayList<>();
+        for(Item item : items){
+
+        }
+        return allItems;
     }
 
-
-    public void save(){
-        //search for list in array list
-        //save that list to a .txt file
-        //create new ArrayList<list> that stores all Lists (savedLists)
+    public ArrayList<Item> displayComplete(ArrayList<Item> items) {
+        //Initialize a new ArrayList<Item> Complete
+        ArrayList<Item> complete = new ArrayList<>();
+        //Search through original array list. If complete is true, add item to the 'Complete' ArrayList
+        for(Item item : items){
+            if(item.getCompleted()){
+                complete.add(item);
+            }
+        }
+        return complete;
     }
 
-    public void saveAll(){
-        //loop through each list (Lists)
-        //create a .txt file for each list and save items with it
-        //add saved lists to ArrayList 'savedLists'
-    }
-
-    //public ArrayList<list> loadList() throws IOException, ClassNotFoundException {
-    public void loadList() throws IOException, ClassNotFoundException{
-
-    }
-
-    public void loadAll(){
-        //return the saved list
+    public ArrayList<Item> displayIncomplete(ArrayList<Item> items) {
+        ArrayList<Item> incomplete = new ArrayList<>();
+        for(Item item : items){
+            if(!item.getCompleted()){
+                incomplete.add(item);
+            }
+        }
+        //return the new list
+        return incomplete;
     }
 
     public void markComplete(Item item){
@@ -113,7 +115,6 @@ public class List {
             item.completed = false;
         }
     }
-
 }
 
 
