@@ -127,30 +127,24 @@ public class todoListController implements Initializable {
     }
     @FXML
     public void saveEditButton(ActionEvent event){
-        List list;
-        //find selected item index
-        int itemIndex = allItemsView.getSelectionModel().getSelectedIndex();
-
+        //get index of item
+        int selectedIndex = allItemsView.getSelectionModel().getSelectedIndex();
         //get new description and dates from text fields
         String newDesc = newDescriptionTF.getText();
         LocalDate newDue = newDueDP.getValue();
 
-        if (newDesc.length() == 0 && newDesc.length() > 256) {
+        if (!(newDesc.length() < 257)) {
             System.out.println("Description must be between 1 and 256 characters.");
         }else{
-            //create a new item type and set it equal to the old item in the array list
-            Item newItem = new Item(newDesc, newDue, false);
-            newItem.setDescription(newDesc);
-            newItem.setDueDate(newDue);
-
-            itemOB.set(itemIndex, newItem);
-            list = addItem(newDesc, newDue, itemIndex);
-            toDoLists.add(list);
-            items.add(newItem);
+            //call save edit
+            saveEdit(selectedIndex, newDesc, newDue);
+            //clear fields
             newDescriptionTF.clear();
             newDueDP.setValue(null);
-        }
 
+        }
+        //display
+        allItemsView.setItems(itemOB);
     }
 
     @FXML
@@ -201,23 +195,45 @@ public class todoListController implements Initializable {
     }
     @FXML
     public void saveListButton(ActionEvent event) {
-
+        String path = pathTF.getText();
+        saveList(path);
     }
 
     @FXML
     public void loadListButton(ActionEvent event) throws IOException, ClassNotFoundException {
-
+        loadList();
     }
 
-    public List addItem(String description, LocalDate dueDate, int index){
-        //call in addItemButton method
-        List list = toDoLists.get(index);
-        Item item = new Item(description, dueDate, false);
-        list.itemsList.add(item);
+    public Item saveEdit(int index, String desc, LocalDate due){
+        Item item = itemOB.get(index);
+        item.setDescription(desc);
+        item.setDueDate(due);
 
-        return list;
+        itemOB.set(index, item);
+
+        return item;
     }
+
     public void saveList(String path) {
+        //read data with a file writer
+        try{
+         FileWriter fileWriter = new FileWriter(path);
+
+         for(List list : listOB){
+             fileWriter.write(list.listName + "\n");
+             for(int i = 0; i < list.itemsList.size(); i++){
+                 fileWriter.write(list.itemsList.get(i).getDescription() + ", "
+                 + list.itemsList.get(i).getDueDate() + ", " + list.itemsList.get(i).getCompleted() + "\n");
+             }
+             fileWriter.close();
+         }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loadList(){
 
     }
 
