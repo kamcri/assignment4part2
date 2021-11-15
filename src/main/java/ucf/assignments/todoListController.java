@@ -11,15 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.*;
@@ -27,7 +21,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class todoListController implements Initializable {
 
@@ -39,6 +35,8 @@ public class todoListController implements Initializable {
     private TextField newDescriptionTF;
     @FXML
     private TextField pathTF;
+    @FXML
+    private TextField loadTF;
     @FXML
     private DatePicker newDueDP;
     @FXML
@@ -61,8 +59,8 @@ public class todoListController implements Initializable {
     ObservableList<Item> itemOB = FXCollections.observableArrayList();
 
     //Array List for storing all lists
-    public ArrayList<List> toDoLists = new ArrayList<List>(listOB);
-    public ArrayList<Item> items = new ArrayList<Item>(itemOB);
+    public ArrayList<List> toDoLists = new ArrayList<>(listOB);
+    public ArrayList<Item> items = new ArrayList<>(itemOB);
 
     @FXML
     public void addListButton(){
@@ -101,7 +99,7 @@ public class todoListController implements Initializable {
             String desc = descriptionTF.getText();
             //get due date from date picker
             LocalDate due = dueDP.getValue();
-            if ((desc.length() < 1) && !(desc.length() > 256)) {
+            if (desc.length() == 0 || desc.length() > 257) {
                 System.out.println("Description must be between 1 and 256 characters.");
             } else {
                 Item addedItem = new Item(desc, due, false);
@@ -126,23 +124,35 @@ public class todoListController implements Initializable {
         itemOB.remove(itemIndex);
     }
     @FXML
-    public void saveEditButton(ActionEvent event){
+    public void SaveDescButton(ActionEvent event){
+        Item oldItem = allItemsView.getSelectionModel().getSelectedItem();
         //get index of item
         int selectedIndex = allItemsView.getSelectionModel().getSelectedIndex();
-        //get new description and dates from text fields
+        //get new description
         String newDesc = newDescriptionTF.getText();
-        LocalDate newDue = newDueDP.getValue();
 
         if (!(newDesc.length() < 257)) {
             System.out.println("Description must be between 1 and 256 characters.");
         }else{
             //call save edit
-            saveEdit(selectedIndex, newDesc, newDue);
+            saveEdit(selectedIndex, newDesc, oldItem.getDueDate());
             //clear fields
             newDescriptionTF.clear();
-            newDueDP.setValue(null);
-
         }
+        //display
+        allItemsView.setItems(itemOB);
+    }
+
+    @FXML
+    public void SaveDateButton(ActionEvent event){
+        Item oldItem = allItemsView.getSelectionModel().getSelectedItem();
+        int selectedIndex = allItemsView.getSelectionModel().getSelectedIndex();
+        LocalDate newDue = newDueDP.getValue();
+
+        //call save edit
+        saveEdit(selectedIndex, oldItem.getDescription(), newDue);
+        //clear fields
+        newDueDP.setValue(null);
         //display
         allItemsView.setItems(itemOB);
     }
@@ -201,7 +211,8 @@ public class todoListController implements Initializable {
 
     @FXML
     public void loadListButton(ActionEvent event) throws IOException, ClassNotFoundException {
-        loadList();
+        String path = loadTF.getText();
+        loadList(path);
     }
 
     public Item saveEdit(int index, String desc, LocalDate due){
@@ -217,7 +228,7 @@ public class todoListController implements Initializable {
     public void saveList(String path) {
         //read data with a file writer
         try{
-         FileWriter fileWriter = new FileWriter(path);
+            FileWriter fileWriter = new FileWriter(path);
 
          for(List list : listOB){
              fileWriter.write(list.listName + "\n");
@@ -233,8 +244,37 @@ public class todoListController implements Initializable {
         }
     }
 
-    public void loadList(){
+    public void loadList(String path) throws FileNotFoundException {
+        File file = new File(path);
 
+
+        if(file.exists()){
+            try{
+                FileReader reader = new FileReader(path);
+                itemOB = loadSavedList(path, reader);
+                allItemsView.getItems().setAll(itemOB);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public ObservableList<Item> loadSavedList(String path, FileReader fileReader){
+        ObservableList<Item> temp = FXCollections.observableArrayList();
+        Scanner sc = new Scanner(fileReader);
+        while(sc.hasNextLine()){
+            String description = sc.nextLine();
+
+            String date = sc.nextLine();
+            LocalDate dueDate = LocalDate.parse(date);
+
+            String completed = sc.nextLine();
+            boolean isCompleted = Objects.equals(completed, "true");
+            Item item = new Item(description, dueDate, isCompleted);
+            temp.add(item);
+        }
+        return temp;
     }
 
     @Override
