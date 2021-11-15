@@ -21,7 +21,7 @@ import java.lang.Class.*;
 /*
 * Describes what a single to-do list is and adding items to the list.
 * This is a model.
-* Moved "displayLists" methods here instead. */
+ */
 
 public class List {
     String listName;
@@ -42,6 +42,7 @@ public class List {
     public String getListName(){
         return listName;
     }
+
     public void setListName(String listName){
         this.listName = listName;
     }
