@@ -206,8 +206,7 @@ public class todoListController implements Initializable {
     @FXML
     public void saveListButton(ActionEvent event) {
         String path = pathTF.getText();
-        String output = saveList(path);
-        System.out.println(output);
+        saveList(path);
     }
 
     @FXML
@@ -239,8 +238,9 @@ public class todoListController implements Initializable {
                  fileWriter.write(list.itemsList.get(i).getDescription() + ", "
                  + list.itemsList.get(i).getDueDate() + ", " + list.itemsList.get(i).getCompleted() + "\n");
              }
-             message = "File saved!";
          }
+            message = "File saved!";
+            System.out.println(message);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -252,18 +252,16 @@ public class todoListController implements Initializable {
         catch (IOException e){
             e.printStackTrace();
         }
-        System.out.println(message);
         return message;
     }
 
     public void loadList(String path) throws FileNotFoundException {
         File file = new File(path);
 
-
         if(file.exists()){
             try{
                 FileReader reader = new FileReader(path);
-                itemOB = loadSavedList(path, reader);
+                items = loadSavedList(path, reader);
                 allItemsView.getItems().setAll(itemOB);
             }
             catch (IOException e){
@@ -272,14 +270,16 @@ public class todoListController implements Initializable {
         }
     }
 
-    public ObservableList<Item> loadSavedList(String path, FileReader fileReader){
-        ObservableList<Item> temp = FXCollections.observableArrayList();
+    public ArrayList<Item> loadSavedList(String path, FileReader fileReader){
+        ArrayList<Item> temp = new ArrayList<>();
         Scanner sc = new Scanner(fileReader);
         while(sc.hasNextLine()){
             String description = sc.nextLine();
 
             String date = sc.nextLine();
-            LocalDate dueDate = LocalDate.parse(date);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = String.format(date, dateTimeFormatter);
+            LocalDate dueDate = LocalDate.parse(date, dateTimeFormatter);
 
             String completed = sc.nextLine();
             boolean isCompleted = Objects.equals(completed, "true");

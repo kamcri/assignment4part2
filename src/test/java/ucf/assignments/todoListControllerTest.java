@@ -29,14 +29,13 @@ class todoListControllerTest {
         controller.toDoLists.add(list);
         toDO.add(list);
 
-        String path = "src/test/java/ucf/assignments/List.txt";
+        String path = "src/test/java/ucf/assignments/Test.txt";
 
         String expected = "File saved!";
 
         String test = controller.saveList(path);
 
         assertEquals(expected, test);
-
 
     }
 
