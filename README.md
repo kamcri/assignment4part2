@@ -2,7 +2,7 @@
 
 How To Use
 
--Add Item
+-Add Item 
 To add an item, first click the list you want to add the item. Then enter a description in the text field under "Add New Item". Select a due date from the calender and press the "Add Item" button when done.
 
 -Delete Item
