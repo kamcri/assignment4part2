@@ -10,6 +10,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -33,7 +35,6 @@
                 <Button layoutX="639.0" layoutY="305.0" mnemonicParsing="false" onAction="#markCompleteButton" prefHeight="25.0" prefWidth="111.0" text="Mark Complete" />
                 <Button fx:id="btnDeleteList" layoutX="14.0" layoutY="302.0" mnemonicParsing="false" onAction="#deleteListButton" prefHeight="30.0" prefWidth="79.0" text="Delete List" />
                 <Separator layoutX="207.0" layoutY="201.0" prefHeight="1.0" prefWidth="558.0" />
-                <Button layoutX="221.0" layoutY="17.0" minHeight="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Sort by Date" />
                 <ComboBox fx:id="displayCB" layoutX="587.0" layoutY="17.0" onAction="#displayCBClicked" prefWidth="150.0" promptText="Display Options" />
             <TableView fx:id="allItemsView" layoutX="211.0" layoutY="50.0" prefHeight="248.0" prefWidth="549.0">
               <columns>
@@ -42,18 +43,31 @@
                   <TableColumn fx:id="completeColumn" prefWidth="97.0" text="Completed" />
               </columns>
             </TableView>
-            <Label layoutX="407.0" layoutY="307.0" text="Edit Item">
+            <Label layoutX="407.0" layoutY="342.0" text="Edit Item">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="newDescriptionTF" layoutX="347.0" layoutY="339.0" prefHeight="25.0" prefWidth="403.0" promptText="Write new description..." />
-            <DatePicker fx:id="newDueDP" layoutX="348.0" layoutY="379.0" prefHeight="25.0" prefWidth="174.0" promptText="Select a new date..." />
-            <Button layoutX="549.0" layoutY="379.0" mnemonicParsing="false" onAction="#saveEditButton" prefHeight="25.0" prefWidth="66.0" text="Save" />
-                <Button fx:id="btnSaveList" layoutX="14.0" layoutY="389.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="79.0" text="Save List" />
-            <Button layoutX="684.0" layoutY="404.0" mnemonicParsing="false" onAction="#clearListButton" text="Clear All" />
+            <TextField fx:id="newDescriptionTF" layoutX="348.0" layoutY="365.0" prefHeight="25.0" prefWidth="286.0" promptText="Write new description..." />
+            <DatePicker fx:id="newDueDP" layoutX="347.0" layoutY="404.0" prefHeight="25.0" prefWidth="237.0" promptText="Select a new date..." />
+            <Button layoutX="662.0" layoutY="365.0" mnemonicParsing="false" onAction="#SaveDescButton" prefHeight="25.0" prefWidth="79.0" text="Save Desc" />
+                <Button fx:id="btnSaveList" layoutX="14.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveListButton" prefHeight="30.0" prefWidth="79.0" text="Save List" />
+            <Button layoutX="317.0" layoutY="305.0" mnemonicParsing="false" onAction="#clearListButton" text="Clear All" />
             <Button layoutX="522.0" layoutY="305.0" mnemonicParsing="false" onAction="#markIncompleteButton" prefHeight="25.0" prefWidth="111.0" text="Mark Incomplete" />
             <TextField fx:id="pathTF" layoutX="12.0" layoutY="352.0" prefHeight="25.0" prefWidth="184.0" promptText="Save list where..." />
+            <Button layoutX="662.0" layoutY="404.0" mnemonicParsing="false" onAction="#SaveDateButton" prefHeight="25.0" prefWidth="79.0" text="Save Date" />
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="104.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/deletebutton.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="25.0" fitWidth="20.0" layoutX="104.0" layoutY="392.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/folder.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="522.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="183.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
             </children></AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="765.0">
             <children>
@@ -72,7 +86,12 @@
                 </Label>
             <DatePicker fx:id="dueDP" layoutX="348.0" layoutY="84.0" promptText="Select a date..." />
                 <Button fx:id="btnAddItem" layoutX="550.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItemButton" text="Add Item" />
-                <Button fx:id="btnLoadList" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Load Previous List" />
+                <Button fx:id="btnLoadList" layoutX="214.0" layoutY="82.0" mnemonicParsing="false" onAction="#loadListButton" prefHeight="25.0" prefWidth="111.0" text="Load Previous List" />
+            <TextField fx:id="loadTF" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="184.0" promptText="Load List..." />
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="305.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/add.png" />
+               </image></ImageView>
             </children></AnchorPane>
     </items>
 </SplitPane>

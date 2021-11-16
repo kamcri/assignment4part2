@@ -18,7 +18,7 @@ public class Item {
 
     private SimpleStringProperty description;
     private LocalDate dueDate;
-    boolean completed = false;
+    boolean completed;
 
     public Item(String description,LocalDate dueDate, boolean completed) {
         this.description = new SimpleStringProperty(description);

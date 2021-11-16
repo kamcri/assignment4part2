@@ -25,7 +25,7 @@ import java.lang.Class.*;
 
 public class List {
     String listName;
-    ArrayList<Item> itemsList; //represents one to do list
+    ArrayList<Item> itemsList;
 
     public List(){
         this.itemsList = new ArrayList<Item>();

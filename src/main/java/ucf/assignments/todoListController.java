@@ -206,7 +206,8 @@ public class todoListController implements Initializable {
     @FXML
     public void saveListButton(ActionEvent event) {
         String path = pathTF.getText();
-        saveList(path);
+        String output = saveList(path);
+        System.out.println(output);
     }
 
     @FXML
@@ -225,23 +226,34 @@ public class todoListController implements Initializable {
         return item;
     }
 
-    public void saveList(String path) {
+    public String saveList(String path){
+        String message = "File not saved.";
+        FileWriter fileWriter = null;
         //read data with a file writer
         try{
-            FileWriter fileWriter = new FileWriter(path);
+            fileWriter = new FileWriter(path);
 
-         for(List list : listOB){
+         for(List list : toDoLists){
              fileWriter.write(list.listName + "\n");
              for(int i = 0; i < list.itemsList.size(); i++){
                  fileWriter.write(list.itemsList.get(i).getDescription() + ", "
                  + list.itemsList.get(i).getDueDate() + ", " + list.itemsList.get(i).getCompleted() + "\n");
              }
-             fileWriter.close();
+             message = "File saved!";
          }
         }
         catch(IOException e){
             e.printStackTrace();
         }
+        assert fileWriter != null;
+        try{
+            fileWriter.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        System.out.println(message);
+        return message;
     }
 
     public void loadList(String path) throws FileNotFoundException {
